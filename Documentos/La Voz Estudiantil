@@ -1,16 +1,116 @@
-#!/bin/bash
+mi-plataforma/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # Definición del flujo de trabajo CI/CD (GitHub Actions)
+├── assets/                     # Archivos estáticos como imágenes, videos, etc.
+│   ├── images/
+│   └── styles/
+├── src/                        # Código fuente del sitio web (JS, CSS, etc.)
+│   ├── js/
+│   ├── css/
+│   └── index.html
+├── README.md                   # Descripción del proyecto
+├── LICENSE                     # Licencia del proyecto
+└── .gitignore                  # Archivos que Git debe ignorar
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Plataforma Web</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a Mi Plataforma</h1>
+        <button id="greetButton">Saludar</button>
+    </header>
 
-# Script clásico en Bash
+    <section>
+        <h2>¿Qué es esta plataforma?</h2>
+        <p>Esta es una plataforma donde podrás interactuar con usuarios y mucho más.</p>
+    </section>
 
-# Saludar al usuario
-echo "¡Hola, bienvenido al script clásico!"
+    <footer>
+        <p>&copy; 2024 Mi Plataforma</p>
+    </footer>
 
-# Mostrar la fecha y hora actual
-echo "La fecha y hora actual es: $(date)"
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
+/* Estilos básicos para la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
-# Solicitar el nombre del usuario
-echo "¿Cómo te llamas?"
-read nombre
+header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-# Saludar al usuario por su nombre
-echo "¡Hola, $nombre! Espero que tengas un gran día."
+button {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005f73;
+}
+
+section {
+    padding: 20px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+// Script para interactuar con el usuario
+document.getElementById('greetButton').addEventListener('click', function() {
+    alert("¡Hola, bienvenido a la plataforma!");
+});
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main   # Este flujo se ejecuta cuando haces un push a la rama principal
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Usamos un entorno de Ubuntu para el despliegue
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js (si usas alguna herramienta de construcción, como Webpack)
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install  # Si usas Node.js o algún gestor de dependencias
+
+    - name: Build project (si usas un sistema de construcción)
+      run: npm run build  # Si tienes un proceso de construcción como 'npm run build'
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # Usa la rama gh-pages para GitHub Pages
+        folder: build     # Aquí se coloca el contenido que se va a desplegar
+        token: ${{ secrets.GITHUB_TOKEN }}  # Token de GitHub para autenticación
