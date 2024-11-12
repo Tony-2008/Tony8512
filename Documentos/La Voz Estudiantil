@@ -1,1 +1,16 @@
-<!DOCTYPE html>
+#!/bin/bash
+
+# Script clásico en Bash
+
+# Saludar al usuario
+echo "¡Hola, bienvenido al script clásico!"
+
+# Mostrar la fecha y hora actual
+echo "La fecha y hora actual es: $(date)"
+
+# Solicitar el nombre del usuario
+echo "¿Cómo te llamas?"
+read nombre
+
+# Saludar al usuario por su nombre
+echo "¡Hola, $nombre! Espero que tengas un gran día."
